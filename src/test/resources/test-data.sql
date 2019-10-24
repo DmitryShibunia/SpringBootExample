@@ -1,0 +1,1 @@
+INSERT INTO employee (first_name, last_name, department_id, job_title, gender, date_of_birth) VALUES ('Dmitry', 'Shibunia', 1, 'aa', 'MALE',  '2000-10-10')
