@@ -16,7 +16,7 @@ import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import javax.sql.DataSource;
 
 @Configuration
-public class TestContext {
+public class DAOTestContext {
     @Bean
     public DataSource dataSource() {
 
@@ -51,8 +51,5 @@ public class TestContext {
     public EmployeeDAO employeeDAO(){
         return  new EmployeeDAO();
     }
-
-    @Bean
-    public EmployeeService employeeService() {return new EmployeeService();}
 
 }
