@@ -17,7 +17,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class,
         classes={TestContext.class})
 public class EmployeeServiceTest {
