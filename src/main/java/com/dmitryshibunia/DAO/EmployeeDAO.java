@@ -2,6 +2,8 @@ package com.dmitryshibunia.DAO;
 
 import com.dmitryshibunia.Model.Employee;
 import com.dmitryshibunia.Model.Gender;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -22,6 +24,7 @@ public class EmployeeDAO {
 
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    private final Logger LOGGER = LogManager.getLogger();
 
     private final String GET_ALL_EMPLOYEES_SQL = "SELECT * FROM employee ORDER BY employee_id";
     private final String GET_EMPLOYEE_BY_ID_SQL = "SELECT * FROM employee WHERE employee_id=:id";
@@ -36,16 +39,19 @@ public class EmployeeDAO {
     }
 
     public List<Employee> getAllEmpoyees(){
+        LOGGER.info("Call getAllEmployees() method of EmployeeDAO");
         return jdbcTemplate.query(GET_ALL_EMPLOYEES_SQL, new EmployeeRowMapper());
     }
 
     public Employee getEmployeeById(Long id) {
+        LOGGER.info("Call getEmployeeById() method of EmployeeDAO");
         SqlParameterSource namedParameters = new MapSqlParameterSource("id", id);
         return namedParameterJdbcTemplate.queryForObject(GET_EMPLOYEE_BY_ID_SQL, namedParameters, new EmployeeRowMapper());
     }
 
     public int addEmployee(Employee employee){
         KeyHolder keyHolder = new GeneratedKeyHolder();
+        LOGGER.info("Call addEmployee() method of EmployeeDAO");
 
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
         parameterSource.addValue("first_name", employee.getFirstName());
@@ -60,6 +66,7 @@ public class EmployeeDAO {
     }
 
     public int updateEmployee(Employee employee){
+        LOGGER.info("Call updateEmployee() method of EmployeeDAO");
 
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
         parameterSource.addValue("employee_id", employee.getEmployeeId());
@@ -74,6 +81,7 @@ public class EmployeeDAO {
     }
 
     public int deleteEmployee(Long id){
+        LOGGER.info("Call deleteEmployee() method of EmployeeDAO");
         return jdbcTemplate.update(DELETE_EMPLOYEE_SQL, new Object[] { id });
     }
 
