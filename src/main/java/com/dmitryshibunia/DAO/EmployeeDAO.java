@@ -20,9 +20,7 @@ import java.util.List;
 @Repository
 public class EmployeeDAO {
 
-    @Autowired
     private JdbcTemplate jdbcTemplate;
-    @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     private final String GET_ALL_EMPLOYEES_SQL = "SELECT * FROM employee ORDER BY employee_id";
@@ -30,6 +28,12 @@ public class EmployeeDAO {
     private final String ADD_EMPLOYEE_SQL = "INSERT INTO employee (first_name, last_name, department_id, job_title, gender, date_of_birth) VALUES (:first_name, :last_name, :department_id, :job_title, CAST (:gender AS gender_t), :date_of_birth)";
     private final String UPDATE_EMPLOYEE_SQL = "UPDATE employee SET first_name =:first_name, last_name =:last_name, department_id =:department_id, job_title =:job_title, gender = CAST (:gender AS gender_t), date_of_birth =:date_of_birth WHERE employee_id = :employee_id";
     private final String DELETE_EMPLOYEE_SQL = "delete from employee where employee_id=?";
+
+    @Autowired
+    EmployeeDAO (JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate){
+        this.jdbcTemplate = jdbcTemplate;
+        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
+    }
 
     public List<Employee> getAllEmpoyees(){
         return jdbcTemplate.query(GET_ALL_EMPLOYEES_SQL, new EmployeeRowMapper());

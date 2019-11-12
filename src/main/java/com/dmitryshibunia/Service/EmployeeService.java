@@ -3,21 +3,28 @@ package com.dmitryshibunia.Service;
 import com.dmitryshibunia.DAO.EmployeeDAO;
 import com.dmitryshibunia.Model.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 
 import java.util.List;
 
-@Repository
+@Service
 public class EmployeeService {
+
+    private EmployeeDAO employeeDAO;
+
     @Autowired
-    EmployeeDAO employeeDAO;
+    EmployeeService (EmployeeDAO employeeDAO) {
+        this.employeeDAO = employeeDAO;
+    }
 
     public List<Employee> getAllEmpoyees(){
         return employeeDAO.getAllEmpoyees();
     }
 
-    public Employee getEmployeeById(Long id) {return  employeeDAO.getEmployeeById(id); }
+    public Employee getEmployeeById(Long id) {
+        return  employeeDAO.getEmployeeById(id);
+    }
 
     public int addEmployee(Employee employee){
         return employeeDAO.addEmployee(employee);

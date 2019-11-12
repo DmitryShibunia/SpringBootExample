@@ -9,37 +9,42 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @CrossOrigin
+@RequestMapping("/employees")
 @RestController
 public class EmployeeController {
 
-    @Autowired
     private EmployeeService employeeService;
 
-    @GetMapping("/employees")
+    @Autowired
+    EmployeeController(EmployeeService employeeService){
+        this.employeeService = employeeService;
+    }
+
+    @GetMapping
     public List<Employee> getAllEmployees() {
         return employeeService.getAllEmpoyees();
     }
 
-    @GetMapping("/employees/{id}")
-    public Employee getEmployeeById(@PathVariable(value = "id") Long id) {
+    @GetMapping("/{id}")
+    public Employee getEmployeeById(@PathVariable Long id) {
         return employeeService.getEmployeeById(id);
     }
 
-    @PostMapping(value = "/employees")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public @ResponseBody Integer addEmployee(@RequestBody Employee employee){
+    public Integer addEmployee(@RequestBody Employee employee){
         return employeeService.addEmployee(employee);
     }
 
-    @PutMapping(value = "/employees")
+    @PutMapping
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public @ResponseBody void updateTeam(@RequestBody Employee employee){
+    public void updateTeam(@RequestBody Employee employee){
         employeeService.updateEmployee(employee);
     }
 
-    @DeleteMapping(value = "/employees/{id}")
+    @DeleteMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody void deleteEmployee(@PathVariable(value = "id") Long id){
+    public void deleteEmployee(@PathVariable Long id){
         employeeService.deleteEmployee(id);
     }
 }
